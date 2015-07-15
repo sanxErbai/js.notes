@@ -98,7 +98,7 @@
 	 */
 	function getFiles(file, options, cbk) {
 		var _reader = new FileReader(),
-		imgreg = /image\/.*/;
+			imgreg = /image\/.*/;
 
 		_reader.readAsDataURL(file);
 
@@ -131,14 +131,14 @@
 	 */
 	function zipCanvas(src, options, cbk) {
 		var _canvas = document.createElement("canvas"),
-		_img = new Image;
+			_img = new Image;
 			
 		_img.src = src;
 		options.scale = options.scale || 1;
 
 		_img.onload = function() {
 			var opWidth = options.maxWidth,
-			opHeight = options.maxHeight;
+				opHeight = options.maxHeight;
 
 			if (opWidth) {
 				if (_img.width > opWidth) {
@@ -158,7 +158,7 @@
 			_canvas.height = _img.height;
 
 			var _context = _canvas.getContext("2d"),
-			type = "image/jpeg";
+				type = "image/jpeg";
 
 			_context.clearRect(0, 0, _canvas.width, _canvas.height);
 			_context.drawImage(_img, 0, 0, _canvas.width, _canvas.height);
