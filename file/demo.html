@@ -62,16 +62,13 @@
 </html>
 
 <script type="text/javascript">
-
 	$(function() {
-
 		$(".wrap").on("click", function() {
 			$("#img-file")[0].click();
 		})
 
 		$("#img-file").on("change", function() {
 			var file = $(this)[0].files[0]
-
 			getFiles(file, {scale:0.5,maxWidth:750}, imgDisplay)
 		});
 
@@ -81,9 +78,7 @@
 			e.preventDefault();
 		}).on("drop", function(e) {
 			e.preventDefault();
-			
 			var file = e.originalEvent.dataTransfer.files[0];
-
 			getFiles(file, {scale:0.5,maxWidth:750}, imgDisplay)
 			//console.log(file);
 		})
@@ -103,9 +98,9 @@
 	 */
 	function getFiles(file, options, cbk) {
 		var _reader = new FileReader(),
-			imgreg = /image\/.*/;
+		imgreg = /image\/.*/;
 
-       	_reader.readAsDataURL(file);
+		_reader.readAsDataURL(file);
 
 		_reader.onload = function() {
 			var src = this.result;
@@ -125,7 +120,7 @@
 			zipCanvas(src, options, function(zipSrc) {
 				cbk(src, zipSrc);
 			})
-        };
+		};
 	}
 
 	/**
@@ -136,15 +131,14 @@
 	 */
 	function zipCanvas(src, options, cbk) {
 		var _canvas = document.createElement("canvas"),
-			_img = new Image;
+		_img = new Image;
 			
 		_img.src = src;
-
 		options.scale = options.scale || 1;
 
 		_img.onload = function() {
 			var opWidth = options.maxWidth,
-				opHeight = options.maxHeight;
+			opHeight = options.maxHeight;
 
 			if (opWidth) {
 				if (_img.width > opWidth) {
@@ -164,7 +158,7 @@
 			_canvas.height = _img.height;
 
 			var _context = _canvas.getContext("2d"),
-				type = "image/jpeg";
+			type = "image/jpeg";
 
 			_context.clearRect(0, 0, _canvas.width, _canvas.height);
 			_context.drawImage(_img, 0, 0, _canvas.width, _canvas.height);
