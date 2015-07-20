@@ -14,10 +14,6 @@
 		}
 		ul {
 			position: relative;
-			-webkit-transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-					transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-			-webkit-transform: translateX(0px) translateZ(0px);
-					transform: translateX(0px) translateZ(0px);
 		}
 		ul li {
 			position: absolute;
@@ -60,15 +56,13 @@
 		$(".wrap").height(countHeight);
 		$("#slider").width(pageWidth * size).height(countHeight);
 		list.width(pageWidth).height(countHeight);
-		//console.log(list);
+		
 		for (var i = 0; i < size; i++) {
-			//console.log(list[i]);
 			list[i].style.left = pageWidth * i +"px";
 		};
 
-		var touchCache = {},
-			swipeX = 0,
-			swipeYlock = 0,
+		var swipeX, swipeY, swipeYlock,
+			touchCache = {},
 			offset = 0,
 			index = size - 1,
 			getNowTime = Date.now || function() {
@@ -78,6 +72,10 @@
 		$("#slider").on("touchstart", function(e) {
 			var touches = e.touches || e.originalEvent.touches, // jquery 和 zepto 不一样, 醉
 				touchDate = touches[0];
+			
+			swipeX = 0;
+			swipeY = 0;
+			swipeYlock = 0;
 
 			offset = currentOffset($(this)[0]);
 
@@ -88,8 +86,7 @@
 			$(this).css({"-webkit-transition": "none", "transition": "none"});
 		}).on("touchmove", function(e) {
 			var touches = e.touches || e.originalEvent.touches,
-				touchDate = touches[0],
-				swipeY = 0;
+				touchDate = touches[0];
 
 			touchCache.x2 = touchDate.pageX;
 			touchCache.y2 = touchDate.pageY;
@@ -101,11 +98,21 @@
 		}).on("touchend", function() {
 			var endOffset = currentOffset($(this)[0]),
 				goIndex = endOffset > 0 ? 0 : endOffset < -index * pageWidth ? index : Math.floor((pageWidth / 2 + Math.abs(endOffset)) / pageWidth);
-				console.log(endOffset);
-				console.log(goIndex);
-			$(this).css({"-webkit-transition": "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1)", "transition": "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1)","-webkit-transform": "translateX("+ (-pageWidth * goIndex) +"px) translateZ(0px)", "transform": "translateX("+ (-pageWidth * goIndex) +"px) translateZ(0px)"});
+			touchCache.end = getNowTime();
+			// console.log(touchCache.end - touchCache.start);
+			if(Math.abs(swipeX) / (touchCache.end - touchCache.start) > .7 && Math.abs(swipeX) < pageWidth / 2) {
+				var nextNum = swipeX > 0 ? -1 : 1;
+				
+				goIndex += nextNum;
 
-			swipeYlock = 0;
+				if (goIndex < 0) {
+					goIndex = 0;
+				} else if (goIndex > index) {
+					goIndex = index;
+				}
+			}
+
+			$(this).css({"-webkit-transition": "-webkit-transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1)", "transition": "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1)","-webkit-transform": "translateX("+ (-pageWidth * goIndex) +"px) translateZ(0px)", "transform": "translateX("+ (-pageWidth * goIndex) +"px) translateZ(0px)"});
 		});
 	})
 
