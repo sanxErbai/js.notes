@@ -1,0 +1,23 @@
+{
+  "name": "js.notes",
+  "version": "0.2.0",
+  "description": "code notes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanxErbai/js.notes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanxErbai/js.notes/issues"
+  },
+  "homepage": "https://github.com/sanxErbai/js.notes#readme",
+  "dependencies": {
+    "path-to-regexp": "^6.2.1",
+    "vue": "^3.3.9"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  /***** tsconfig *****/
+  // http://json.schemastore.org/tsconfig
+  // "include": ["./types/"],
+  "compilerOptions": {
+    // 编译目标
+    // webpack 以 loader 形式使用 tsc，将后续继续由 babel 编译至适用于 browser js-engine 的编译目标
+    // metro 仅使用 tsc 作为 type-checker，在 metro 内部使用 babel 编译至适用于 RN js-engine 的编译目标
+    "target": "esnext",
+
+    // 模块代码生成策略
+    "module": "esnext",
+
+    // 模块解析策略
+    // https://www.tslang.cn/docs/handbook/module-resolution.html
+    "moduleResolution": "node",
+
+    "useUnknownInCatchVariables": false,
+    // 编译时 tsx 转换选项
+    // https://www.tslang.cn/docs/handbook/jsx.html
+    "jsx": "preserve",
+
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+
+    // 不自动引入 @types 下的所有 types 文件
+    // https://www.typescriptlang.org/docs/handbook/tsconfig-json.html#types-typeroots-and-types
+    "types": [],
+
+    /*** 类型检查相关 ***/
+
+    // 允许从没有设置默认导出的模块中默认导入
+    "allowSyntheticDefaultImports": true,
+
+    // 启用所有严格类型检查选项
+    // noImplicitAny, noImplicitThis, alwaysStrict， strictNullChecks, strictFunctionTypes, strictPropertyInitialization
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      // "~/*": ["./src/*"]
+    }
+  }
+}
